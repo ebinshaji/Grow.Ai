@@ -17,6 +17,11 @@ nav{
     z-index: 1;
     align-items: center;
     width: 100%;
+    background-color: transparent; 
+    }
+    nav.scrolled {
+        background-color: #333;
+        padding: 10px 0px;
     }
     .logo{
     width: 20vw;
@@ -160,8 +165,13 @@ nav{
       z-index: 1;
       transform: translateY(-100%);
       transition: all 1s;
-      -webkit-backdrop-filter: blur(30px);
-       backdrop-filter: blur(30px);  
+      -webkit-backdrop-filter: blur(20px);
+       backdrop-filter: blur(20px);  
+       background-color: hsla(0, 0%, 0%, 0.5);
+      }
+   
+      nav ul li a.active{
+        color: #00ff15;
       }
       }
       nav ul.slide{
@@ -220,6 +230,8 @@ nav{
     transform: translate(-50%, -50%);
     max-width: 100%; 
 }
+/* do not alter above code*/
+/*Write Code Below*/
 
 /*content css*/
 
