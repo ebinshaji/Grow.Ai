@@ -4,6 +4,10 @@
     font-family: BigJohn;
     src: url('../Fonts/BIG\ JOHN.otf') format('opentype'); 
 }
+@font-face {
+  font-family: Candara;
+  src: url('../Fonts/Candara.ttf') format('opentype'); 
+}
 body {
     margin: 0;
     background-color : #F9FFF8;
@@ -234,4 +238,32 @@ nav{
 /*Write Code Below*/
 
 /*content css*/
+#content{
+  align-items: center;
+}
+#head{
+  text-align: center;
+  font-size: 5vw;
+  color: #616161;
+  font-family: Candara;
+  text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.5);
+}
+.left, .right{
+  margin: 10px 60px;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 12vw;
+}
+.right p, .left p, .left img, .right img{
+  align-self: center;
+}
+.left img, .right img{
+  width: 30%;
+}
+.right p, .left p{
+  width: 50%;
+  color: #585858;
+  font-family: Calibri;
+  font-size: 2.3vw;
+}
 
