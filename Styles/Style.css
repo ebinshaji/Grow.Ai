@@ -6,6 +6,7 @@
 }
 body {
     margin: 0;
+    background-color: white;
 }
 #navbar{
         padding: 40px;
@@ -71,3 +72,17 @@ body {
     top: 18%;
 }
 
+.body-content{
+    text-align: center;
+    color: black;
+    text-shadow: 1.5px 1.5px 1.5px rgb(211, 206, 206);
+}
+
+#sub-title{
+    color: grey;
+}
+
+.blog-1{
+    color: grey;
+    text-align: left;
+}
