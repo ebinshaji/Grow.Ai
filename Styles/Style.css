@@ -277,3 +277,23 @@ nav{
   margin-right: 9px;
 }
 
+.firstrow, .secondrow, .thirdrow{
+  color: rgb(71, 69, 69);
+  font-size: 25px;
+  font-weight: 800;
+  padding: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+tr,td{
+  padding: 15px;
+}
+
+#footer-start{
+  font-size: 20px;
+  color: rgb(103, 101, 101);
+  font-style: bold;
+  font-family: Arial, Helvetica, sans-serif;
+}
+#footer-heading{
+  font-size: 40px;
+}
