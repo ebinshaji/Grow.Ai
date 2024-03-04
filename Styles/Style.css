@@ -10,11 +10,7 @@
 }
 body {
     margin: 0;
-<<<<<<< HEAD
-    background-color: white;
-=======
     background-color : #F9FFF8;
->>>>>>> 3530835023d201536e84594a2deeb6b4a808cd24
 }
 nav{
     display:flex;
@@ -281,17 +277,3 @@ nav{
   margin-right: 9px;
 }
 
-.body-content{
-    text-align: center;
-    color: black;
-    text-shadow: 1.5px 1.5px 1.5px rgb(211, 206, 206);
-}
-
-#sub-title{
-    color: grey;
-}
-
-.blog-1{
-    color: grey;
-    text-align: left;
-}
