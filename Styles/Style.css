@@ -32,8 +32,11 @@ nav {
 }
 
 nav.scrolled {
-	background-color: #333;
+	background: rgb(33,64,23);
+	background: linear-gradient(236deg, rgba(33,64,23,1) 0%, rgba(9,22,30,1) 100%);  
 	padding: 10px 0px;
+	border-bottom: 1px solid #293136;
+	box-shadow: 0 10px 40px rgba(0, 255, 21, 0.1);
 }
 
 .logo {
