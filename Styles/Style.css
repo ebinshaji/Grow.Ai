@@ -268,6 +268,22 @@ nav ul.slide {
 	font-family: "Archivo", "Archivo Placeholder", sans-serif;
 	text-shadow: 2px 2px 6px rgba(95, 95, 95, 0.5);
 }
+#head1{
+	font-size: 2.6vw; 
+	color: rgb(148, 222, 29); 
+	padding:4vw 0 0 9vw;
+}
+#graph_div{
+	border: 1px solid rgba(148, 222, 29, 0.438);
+	width: 45%;
+	margin-top: 90px;
+	height: 100%;
+	border-radius: 1vw;
+	background-image: url("../images/over2.webp"); 
+	background-position: center; 
+	background-size: cover; 
+	background-repeat: no-repeat;
+}
 
 .left,
 .right {
@@ -304,6 +320,12 @@ nav ul.slide {
   #head{
     font-size: 8vw;
     padding: 0 8vw;
+  }
+  #head1{
+	font-size: 8vw;
+  }
+  #graph_div{
+	width: 100%;
   }
   .left, .right{
     display: block;
