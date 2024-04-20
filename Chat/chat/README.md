@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js, Vercel AI SDK, Llama.cpp & ModelFusion starter
 
-## Getting Started
+This starter example shows how to use [Next.js](https://nextjs.org/), the [Vercel AI SDK](https://sdk.vercel.ai/docs), [Llama.cpp](https://github.com/ggerganov/llama.cpp) and [ModelFusion](https://modelfusion.dev) to create a ChatGPT-like AI-powered streaming chat bot.
 
-First, run the development server:
+## Setup
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+1. Install [Llama.cpp](https://github.com/ggerganov/llama.cpp) on your machine.
+2. Clone the repository: `git clone https://github.com/lgrammel/modelfusion-llamacpp-nextjs-starter.git`
+3. Install dependencies: `npm install`
+4. Start the development server: `npm run dev`
+
+For each example, you also need to download the GGUF model and start the Llama.cpp server:
+
+## Examples
+
+### Llama 2
+
+1. Model: [Llama-2-7B-Chat-GGUF](https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGUF)
+2. Server start: `./server -m models/llama-2-7b-chat.Q4_K_M.gguf` (with the right model path)
+3. Go to http://localhost:3000/llama2
+4. Code: `app/api/llama/route.ts`
+
+### Mistral Instruct
+
+1. Model: [Mistral-7B-Instruct-v0.2-GGUF](https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.2-GGUF)
+1. Server start: `./server -m models/mistral-7b-instruct-v0.2.Q4_K_M.gguf` (with the right model path)
+1. Go to http://localhost:3000/mistral
+1. Code: `app/api/mistral/route.ts`
+
+### Mixtral Instruct
+
+1. Model: [Mixtral-8x7B-Instruct-v0.1-GGUF](https://huggingface.co/TheBloke/Mixtral-8x7B-Instruct-v0.1-GGUF)
+1. Server start: `./server -m models/mixtral-8x7b-instruct-v0.1.Q4_K_M.gguf` (with the right model path)
+1. Go to http://localhost:3000/mixtral
+1. Code: `app/api/mixtral/route.ts`
+
+### OpenHermes 2.5
+
+1. Model: [OpenHermes-2.5-Mistral-7B-GGUF](https://huggingface.co/TheBloke/OpenHermes-2.5-Mistral-7B-GGUF)
+1. Server start: `./server -m models/openhermes-2.5-mistral-7b.Q4_K_M.gguf` (with the right model path)
+1. Go to http://localhost:3000/openhermes
+1. Code: `app/api/openhermes/route.ts`
+
+## Example Route
+
+```ts
+import { ModelFusionTextStream, asChatMessages } from "@modelfusion/vercel-ai";
+import { Message, StreamingTextResponse } from "ai";
+import { llamacpp, streamText, trimChatPrompt } from "modelfusion";
+
+export const runtime = "edge";
+
+export async function POST(req: Request) {
+  const { messages }: { messages: Message[] } = await req.json();
+
+  const model = llamacpp
+    .CompletionTextGenerator({
+      promptTemplate: llamacpp.prompt.Llama2, // choose the correct prompt template
+      temperature: 0,
+      cachePrompt: true,
+      contextWindowSize: 4096, // Llama 2 context window size
+      maxGenerationTokens: 512, // Room for answer
+    })
+    .withChatPrompt();
+
+  // Use ModelFusion to call llama.cpp:
+  const textStream = await streamText({
+    model,
+    // reduce chat prompt length to fit the context window:
+    prompt: await trimChatPrompt({
+      model,
+      prompt: {
+        system:
+          "You are an AI chat bot. " +
+          "Follow the user's instructions carefully.",
+
+        // map Vercel AI SDK Message to ModelFusion ChatMessage:
+        messages: asChatMessages(messages),
+      },
+    }),
+  });
+
+  // Return the result using the Vercel AI SDK:
+  return new StreamingTextResponse(
+    ModelFusionTextStream(
+      textStream,
+      // optional callbacks:
+      {
+        onStart() {
+          console.log("onStart");
+        },
+        onToken(token) {
+          console.log("onToken", token);
+        },
+        onCompletion: () => {
+          console.log("onCompletion");
+        },
+        onFinal(completion) {
+          console.log("onFinal", completion);
+        },
+      }
+    )
+  );
+}
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
