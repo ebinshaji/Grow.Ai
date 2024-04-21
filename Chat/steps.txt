@@ -1,1 +1,9 @@
-npm install next@latest react@latest react-dom@latest
+npm install
+
+server -m models/llama-2-7b-chat.Q4_K_M.gguf
+
+https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGUF/tree/main  
+
+ npm run dev
+
+ http://localhost:3000/llama2
